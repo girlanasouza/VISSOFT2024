@@ -7,9 +7,8 @@ function random(min, max) {
 }
 
 function randomRGB() {
-  return `rgb(${random(0, 160)}, ${random(139, 220)}, ${random(220, 255)})`;
+  return `rgb(${random(1, 255)}, ${random(1, 255)}, ${random(1, 255)})`;
 }
-
 export const HistogramReasonDeath = ({ dataReasonDeath }) => {
   const [dtHist, setDathist] = React.useState(null);
 
@@ -40,11 +39,11 @@ export const HistogramReasonDeath = ({ dataReasonDeath }) => {
           subreason: subreasonDics[k],
           importance: importanceDics[k],
         });
-      }
+      } 
 
       const tmpArray = [];
       for (let k in tmpDt) {
-        if (tmpDt[k] > 1) {
+        if (tmpDt[k] >= 5 ) {
           tmpArray.push({ label: k, value: tmpDt[k], color: randomRGB() });
         }
       }
@@ -66,18 +65,22 @@ export const HistogramReasonDeath = ({ dataReasonDeath }) => {
       <Plot
         data={[
           {
-            x: dtHist.labels,
-            y: dtHist.values,
+            x: dtHist.values,  // Valores no eixo x
+            y: dtHist.labels,  // Rótulos no eixo y
             type: "bar",
+            orientation: "h", 
             marker: { color: dtHist.colors },
+            text: dtHist.labels.map((label, index) => `${label} (${dtHist.values[index]})`),
+            textposition: "auto",
+            width: 0.9,
           },
         ]}
         layout={{
-          title: "Reasons of Death",
-          xaxis: { title: "Reason" },
-          // yaxis: { title: "Count" },
+          title: "Top Reasons for Death and Their Occurrences",
+          xaxis: { title: "", showticklabels: false, linecolor: "white", gridcolor: "white" },  
+          yaxis: { title: "", showticklabels: false, linecolor: "white", gridcolor: "white" }, 
         }}
-        style={{ width: "100%", height: "400px" }}
+        style={{ width: "100%", height: "auto" }}
       />
     )
   );

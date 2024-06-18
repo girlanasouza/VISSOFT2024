@@ -6,12 +6,14 @@ import { TableAMPSS } from "../TableAMPSS";
 import { ChartLineAmPSSRSS } from "../ChartLineAmPSSRSS";
 import { ReasonsProcessDied } from "../ReasonsProcessDied";
 import { HistogramReasonDeath } from "../HistogramReasonDeath";
+import { HistogramProcessKill } from "../HistogramProcessKill/HistogramProcessKill";
+import { BarChartAmPSS } from "../BarChartAmPSS";
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../../styles/styles.css";
-import { BarChart } from "../BarChart/BarChart";
 
 export const Analysis = () => {
   const [dataRss, setDataRss] = useState({});
@@ -53,7 +55,7 @@ export const Analysis = () => {
       <Summary fileUploaded={fileUploaded} />
 
       {/* Visão Geral de Uso de Memória */}
-      <div className="section  mt-5" id="totalRss">
+      {/* <div className="section  mt-5" id="totalRss">
         <SectionHeader
           title="TOTAL RESIDENT SET SIZE (RSS) and PROPORTIONAL SET SIZE (PSS) by process"
           description={
@@ -76,7 +78,7 @@ export const Analysis = () => {
           }
         />
         <TotalRSS dataRss={dataRss} />
-      </div>
+      </div> */}
 
       {/* Event Log AM PSS */}
       <div className="section" id="reasonDeath">
@@ -84,7 +86,13 @@ export const Analysis = () => {
         <p>Report collection of memory used by a process</p>
         <ChartLineAmPSSRSS dataAmPss={dataAmPss} />
         {/* <MemoryConsumptionChart dataAmPss={dataAmPss} /> */}
-        <BarChart dataAmPss={dataAmPss} />
+        {/* <ErrorBarAmPSS dataAmPss={dataAmPss} /> */}
+        
+        
+        <div className="mt-5">
+          <BarChartAmPSS dataAmPss={dataAmPss}/>
+        </div>
+
         <div className="mt-5">
           <TableAMPSS dataAmPss={dataAmPss} />
         </div>
@@ -92,15 +100,19 @@ export const Analysis = () => {
 
       {/*  Event Log AM KILL*/}
       <div className="section" id="amKill">
-        <SectionHeader title="EVENT LOG TAG AM_PSS" />
+        <SectionHeader title="EVENT LOG TAG AM KILL" />
+        <p>The horizontal graph shows the five most frequently terminated processes, ordered by number of occurrences from smallest to largest. Each bar represents a specific process, with the length of the bar indicating how often the process was terminated. </p>
+        <HistogramProcessKill dataAmKill={dataAmKill}/>
         <AmKill dataAmKill={dataAmKill} />
+        
       </div>
 
       {/* Motivos de Encerramento de Processos */}
       <div className="section" id="reasonDeath">
         <SectionHeader title="APPLICATION EXIT INFO" />
-        <ReasonsProcessDied dataReasonDeath={dataReasonDeath} />
+        <p>The horizontal graph shows the main causes of death, ordered by the frequency with which they occur. Each bar represents a specific reason, and the length of the bar indicates the number of occurrences of that reason. </p>
         <HistogramReasonDeath dataReasonDeath={dataReasonDeath} />
+        <ReasonsProcessDied dataReasonDeath={dataReasonDeath} />
       </div>
     </div>
   );

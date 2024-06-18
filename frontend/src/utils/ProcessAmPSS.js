@@ -8,9 +8,12 @@ export const ProcessAmPSS = ({ dataAmPss }) => {
   const rssDics = dataAmPss["RSS"];
 
   let row = [];
-  const csvData = [["date", "time", "pid", "process", "pss", "rss"]];
+  const csvData = [["date", "time", "pid", "process", "pss", "rss", "pssError", "rssError"]];
 
   for (let k in pidDics) {
+    const pssError = pssDics[k] * 0.05; // 5% do valor de PSS como erro
+    const rssError = rssDics[k] * 0.05; // 5% do valor de RSS como erro
+
     row = [
       dateDics[k],
       timestampDics[k],
@@ -18,6 +21,8 @@ export const ProcessAmPSS = ({ dataAmPss }) => {
       processDics[k],
       pssDics[k],
       rssDics[k],
+      pssError,
+      rssError
     ];
     csvData.push(row);
     elements.push({
@@ -27,6 +32,8 @@ export const ProcessAmPSS = ({ dataAmPss }) => {
       process: processDics[k],
       pss: pssDics[k],
       rss: rssDics[k],
+      pssError: pssError,
+      rssError: rssError
     });
   }
   return { elements, csvData };

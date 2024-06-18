@@ -1,14 +1,12 @@
-
 # Memory Tracer
 
-Memory Tracer é uma ferramenta para análise de consumo de memória em dispositivos Android através de logs de bug reportados na fase de teste. O projeto é uma colaboração entre UFAM/IComp e Motorola Mobility.
+Memory Tracer is a tool for analyzing memory consumption on Android devices through bug logs reported during the testing phase. The project is a collaboration between UFAM/IComp and Motorola Mobility.
 
-## Visão Geral
+## Overview
 
-A aplicação consiste em um frontend desenvolvido em React e um backend em Flask. O frontend exibe visualizações dos dados de consumo de memória processados pelo backend.
+The application consists of a frontend developed in React and a backend in Flask. The frontend displays visualizations of memory consumption data processed by the backend.
 
-## Estrutura do Projeto
-
+## Project Structure
 
 project-root/
 
@@ -38,116 +36,103 @@ project-root/
 
 └── docker-compose.yml
 
-```
+## File
 
-## Instalação e Execução
+To run tests, you can download a sample bug report file from this link [here](https://drive.google.com/file/d/1evGIqVCUj7PgSST62SgUEyyPZw7caeZO/view?usp=sharing).
 
-### Pré-requisitos
+## Installation and Execution
+
+### Prerequisites
 
 - Docker
-
 - Docker Compose
 
-### Passos para Construir e Executar
+### Steps to Build and Run
 
-1\. Clone o repositório:
+1\. Clone the repository:
 
-   ```sh
+```sh
+   https://github.com/girlanasouza/VISSOFT2024.git
+```
 
-   git clone girlanasouza/Integrando-MemoryTracer
+2\. Build the containers:
 
-   cd memory-tracer
+```sh
 
-   ```
+docker-compose build
 
-2\. Construa os contêineres:
+```
 
-   ```sh
+3\. Start the containers:
 
-   docker-compose build
+```sh
 
-   ```
+docker-compose up
 
-3\. Inicie os contêineres:
+```
 
-   ```sh
+4\. Access the application:
 
-   docker-compose up
+Open your browser and go to http://localhost:3000.
 
-   ```
+## Proxy Configuration in Frontend
 
-4\. Acesse a aplicação:
-
-   Abra o navegador e acesse [http://localhost:3000](http://localhost:3000).
-
-## Configuração do Proxy no Frontend
-
-Certifique-se de que seu `package.json` do frontend React contenha a configuração do proxy para redirecionar as chamadas de API para o backend Flask:
+Ensure that your React frontend package.json contains the proxy configuration to redirect API calls to the Flask backend:
 
 **frontend/package.json:**
 
 ```json
-
 {
+  "name": "memory-tracer",
 
-  "name": "memory-tracer",
+  "version": "0.1.0",
 
-  "version": "0.1.0",
+  "private": true,
 
-  "private": true,
+  "proxy": "http://backend:5000",
 
-  "proxy": "http://backend:5000",
-
-  "dependencies": {
-
-    // suas dependências
-  // resto do arquivo
-    }
-
+  "dependencies": {
+    // your dependencies
+  }
 }
-
 ```
 
-## Uso
+## Usage
 
-### Upload de Logs
+### Upload Logs
 
-1\. Faça o upload dos logs no frontend. Os logs serão salvos no diretório `backend/upload`.
+1\. Upload the logs in the frontend. The logs will be saved in the `backend/upload` directory.
 
-### Visualização dos Dados
+### Data Visualization
 
-1\. Após o upload, você poderá visualizar diversas métricas de consumo de memória, incluindo RSS e PSS por processo.
+1\. After the upload, you can visualize various memory consumption metrics, including RSS and PSS per process.
 
-### Endpoints do Backend
+### Backend Endpoints
 
-- `/upload`: Endpoint para upload de arquivos de log.
+- `/upload`: Endpoint for uploading log files.
 
-- `/file`: Retorna o conteúdo do arquivo de log carregado.
+- `/file`: Returns the content of the uploaded log file.
 
-- `/amPss`: Retorna dados de PSS e RSS dos processos.
+- `/amPss`: Returns PSS and RSS data of processes.
 
-- `/reasonDeath`: Retorna as razões de morte dos processos.
+- `/reasonDeath`: Returns the reasons for process deaths.
 
-- `/TotalMemory`: Retorna o total de memória utilizada.
+- `/TotalMemory`: Returns the total memory used.
 
-- `/amKill`: Retorna informações de processos terminados.
+- `/amKill`: Returns information on terminated processes.
 
-- `/CpuInfo`: Retorna informações da CPU.
+## Contribution
 
-## Contribuição
+Contributions are welcome! Feel free to open issues and pull requests.
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
+## License
 
-## Licença
+This project is licensed under the MIT License [Licença MIT](LICENSE).
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
+## Contact
 
-## Contato
-
-Para mais informações, entre em contato com [Girlana Souza](https://github.com/girlanasouza).
+For more information, contact [Girlana Souza](https://github.com/girlanasouza).
 
 ---
 
 © 2024 Memory Tracer | All Rights Reserved to [SWPERFI](https://swperfi.icomp.ufam.edu.br) Project, a partnership between UFAM/IComp and Motorola Mobility.
-
-```

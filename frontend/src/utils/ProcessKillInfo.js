@@ -1,5 +1,4 @@
 export const ProcessKillInfo = ({ dataAmKill }) => {
-  console.log(dataAmKill);
   const elements = [];
   const timeDics = dataAmKill["TIMESTAMP"];
   const pidDics = dataAmKill["PID"];

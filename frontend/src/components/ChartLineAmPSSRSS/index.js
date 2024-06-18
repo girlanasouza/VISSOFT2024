@@ -25,7 +25,9 @@ export const ChartLineAmPSSRSS = ({ dataAmPss }) => {
       type: "scatter",
       mode: "lines+markers",
       name: "RSS",
-      line: { color: "blue" },
+      marker: {color: "red", size: 6},
+      line: { color: "black", dash: "dash" ,  width: 1},
+
     },
     {
       x: timestamps,
@@ -34,20 +36,25 @@ export const ChartLineAmPSSRSS = ({ dataAmPss }) => {
       type: "scatter",
       mode: "lines+markers",
       name: "PSS",
-      line: { color: "red" },
+      marker: {color: "blue", size: 6},
+      line: { color: "black" , dash: "dash" , width: 1},
     },
   ];
 
   const plotlyLayout = {
-    title: "Consumption of RSS and PSS over Time",
-    xaxis: {
-      title: "Timestamp",
-      tickangle: -45,
+    title: {
+      text: "Consumption of RSS and PSS over Time",
+      font: {
+        color: "#000000", // Cor da fonte do título
+      },
     },
-    yaxis: {
-      title: "Memory(MB)",
-    },
+  
     hovermode: "closest",
+    paper_bgcolor: "#ffffff", // Cor de fundo da área do gráfico
+    plot_bgcolor: "#ffffff", // Cor de fundo da área de plotagem
+    font: {
+      color: "#000000", // Cor da fonte do restante do gráfico (legenda, etc.)
+    },
   };
 
   return (
