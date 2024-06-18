@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+    volumes:
+      - ./backend/upload:/app/backend/upload
+    ports:
+      - "5000:5000"
+    command: ["flask", "run"]
+
+  frontend:
+    build:
+      context: .
+      target: build
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    working_dir: /app/frontend
+    command: bash -c "npm install && npm start"
+    volumes:
+      - ./frontend:/app/frontend
+    depends_on:
+      - backend
