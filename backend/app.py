@@ -16,31 +16,31 @@ file = ""
 
 def readFile(nome_arquivo):
     global file
-    with open(nome_arquivo, 'r',encoding='utf-8') as arquivo:
+    with open(nome_arquivo, 'r',encoding='latin-1') as arquivo:
         file = arquivo.read()
     return file
 
 @app.route('/upload', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def upload_file():
-    nome_arquivo = ""
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
 
     uploaded_file = request.files['file']
     if uploaded_file.filename == '':
-        return jsonify({'error': 'No selected file'})
+        return jsonify({'error': 'No selected file'}), 400
 
-    nome_arquivo = uploaded_file.filename
-    caminho_arquivo = os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo)
-    uploaded_file.save(caminho_arquivo)
-
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
     try:
-        readFile(caminho_arquivo)
-        return jsonify({'message': 'File uploaded successfully'}),200
+        # Ensure the upload folder exists
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        uploaded_file.save(file_path)
+        readFile(file_path)
+        return jsonify({'message': 'File uploaded successfully'}), 200
     except Exception as e:
-        print("Não foi possível ler o arquivo:", e)
+        print(f"Error reading the file: {e}")
         return jsonify({'error': 'Failed to read the file'}), 500
-
+    
 @app.route('/file', methods=['GET'])
 @cross_origin(supports_credentials=True)
 def getFile():
